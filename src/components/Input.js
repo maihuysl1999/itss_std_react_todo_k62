@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 */
 function Input({value, onChange}) {
   function handleChange(event) {
-        // Here, we invoke the callback with the new value
         onChange(event.target.value);
     }
   return (

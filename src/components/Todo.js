@@ -28,6 +28,14 @@ function Todo() {
     /* テストコード 終了 */
   ]);
   
+  const [filter, setFilter] = React.useState('ALL');
+
+  const displayItems = items.filter(item => {
+    if (filter === 'ALL') return true;
+    if (filter === 'TODO') return !item.done;
+    if (filter === 'DONE') return item.done;
+  });
+  
   function handleChange(newValue) {
       setValue(newValue);
     }
@@ -35,6 +43,19 @@ function Todo() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     putItems([...items, {key: getKey(), text: value, done: false }])
+  }
+  
+  function handleDone(check) {
+    items.map(item => {
+      if(item.key === check.key) {
+        item.done = !item.done;
+      }
+      return item;
+    });
+  }
+  
+  function handleFilterChange(value) {
+    setFilter(value);
   }
 
   return (
@@ -45,14 +66,16 @@ function Todo() {
       <form onSubmit={handleFormSubmit} >
         <Input value={value} onChange={handleChange} />
       </form>
-      {items.map(item => (
-        <TodoItem 
-          key ={item.key}
+      <Filter onChange={handleFilterChange} value={filter}/>
+      {displayItems.map(item => (
+        <TodoItem
+          key={item.key}
           item={item}
+          onCheck={handleDone}
         />
       ))}
       <div className="panel-block">
-        {items.length} items
+        {displayItems.length} items
       </div>
     </div>
   );

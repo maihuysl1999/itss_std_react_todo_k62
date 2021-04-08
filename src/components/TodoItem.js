@@ -6,15 +6,16 @@
 */
 import {useState} from 'react';
 
-function TodoItem( {item} ) {
+function TodoItem( {item, onCheck} ) {
   const [isBlack, setIsBlack] = useState(true);
 
-  const handleChnageTextColor = (e) => {
+  const handleChangeTextColor = (e) => {
     setIsBlack(!isBlack);
+    onCheck(item);
   }
   return (
     <label className="panel-block">
-      <input type="checkbox" value={isBlack} onChange={handleChnageTextColor}/>
+      <input type="checkbox" value={isBlack} onChange={handleChangeTextColor}/>
       <div className={!isBlack ? 'has-text-grey-light' : ''}>{item.text}</div>
     </label>
   );
