@@ -19,6 +19,7 @@ import useStorage from '../hooks/storage';
 import {getKey} from "../lib/util";
 
 function Todo() {
+  const [value, setValue] = useState("");
   const [items, putItems] = React.useState([
       /* テストコード 開始 */
     { key: getKey(), text: '日本語の宿題', done: false },
@@ -26,12 +27,24 @@ function Todo() {
     { key: getKey(), text: '明日の準備をする', done: false },
     /* テストコード 終了 */
   ]);
+  
+  function handleChange(newValue) {
+      setValue(newValue);
+    }
+  
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    putItems([...items, {key: getKey(), text: value, done: false }])
+  }
 
   return (
     <div className="panel">
       <div className="panel-heading">
         ITSS ToDoアプリ
       </div>
+      <form onSubmit={handleFormSubmit} >
+        <Input value={value} onChange={handleChange} />
+      </form>
       {items.map(item => (
         <TodoItem 
           key ={item.key}

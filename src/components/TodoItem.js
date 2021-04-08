@@ -11,14 +11,10 @@ function TodoItem( {item} ) {
 
   const handleChnageTextColor = (e) => {
     setIsBlack(!isBlack);
-    
   }
   return (
     <label className="panel-block">
-      <input type="checkbox"
-      onchange ="toggleCheck" 
-      value={isBlack} onChange={handleChnageTextColor} 
-      />
+      <input type="checkbox" value={isBlack} onChange={handleChnageTextColor}/>
       <div className={!isBlack ? 'has-text-grey-light' : ''}>{item.text}</div>
     </label>
   );
